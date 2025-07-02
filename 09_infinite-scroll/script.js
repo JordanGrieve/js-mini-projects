@@ -6,7 +6,8 @@ let photosArray = [];
 // JavaScript for Infinite Scroll
 // Unsplash API Key
 const count = 10; // Number of images to fetch per request
-const apiKey = `L8vr8fqoXQN3MqNKjDzCMw7IU3scvaSIe-JGQ52WMhk`;
+const apiKey = `Fake Key`;
+
 const apiUrl = `https://api.unsplash.com/photos/random?client_id=${apiKey}&count=${count}`;
 
 // Helper Function to Set Attributes on Elements
@@ -52,6 +53,14 @@ async function getPhotos() {
     console.error("Error fetching photos:", error);
   }
 }
+
+// Check to see if scrolling near bottom of page, Load More Photos
+window.addEventListener("scroll", () => {
+  // Check if the user has scrolled near the bottom of the page
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+    getPhotos();
+  }
+});
 
 // on Load
 getPhotos();
