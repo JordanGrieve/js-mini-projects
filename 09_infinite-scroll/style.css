@@ -32,3 +32,22 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.image-container {
+  margin: 10px 30%;
+}
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 5px;
+}
+/* media queries */
+@media screen and (max-width: 600px) {
+  .image-container {
+    margin: 10px;
+  }
+  h1 {
+    font-size: 20px;
+  }
+}
