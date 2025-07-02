@@ -1,10 +1,24 @@
+const quoteContainer = document.getElementById("quote-container");
+const quoteText = document.getElementById("quote");
+const authorText = document.getElementById("author");
+const twitterButton = document.getElementById("twitter");
+const newQuoteButton = document.getElementById("new-quote");
+
 let apiQuotes = [];
 
 // Show New Quote
 function newQuote() {
   // Pick a random quote from the apiQuotes array
   const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
-  console.log(quote);
+
+  authorText.textContent = quote.author ? quote.author : "Unknown";
+  quoteText.textContent = quote.text;
+  // Check quote length to determine styling
+  if (quote.text.length > 120) {
+    quoteText.classList.add("long-quote");
+  } else {
+    quoteText.classList.remove("long-quote");
+  }
 }
 
 // Get Quote from API
