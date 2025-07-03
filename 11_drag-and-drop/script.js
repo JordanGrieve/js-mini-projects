@@ -88,22 +88,45 @@ function updateDOM() {
   // Progress Column
   progressList.textContent = ""; // Reset HTML
   progressListArray.forEach((progressItem, index) => {
-    createItemEl(progressList, "1", progressItem, index);
+    createItemEl(progressList, "0", progressItem, index);
   });
 
   // Complete Column
   completeList.textContent = ""; // Reset HTML
   completeListArray.forEach((completeItem, index) => {
-    createItemEl(completeList, "2", completeItem, index);
+    createItemEl(completeList, "0", completeItem, index);
   });
 
   // On Hold Column
   onHoldList.textContent = ""; // Reset HTML
   onHoldListArray.forEach((onHoldItem, index) => {
-    createItemEl(onHoldList, "3", onHoldItem, index);
+    createItemEl(onHoldList, "0", onHoldItem, index);
   });
 
   // Run getSavedColumns only once, Update Local Storage
+  updatedOnLoad = true; // Set flag to true after first load
+  updateSavedColumns();
+}
+
+// Allow arrays to reflect changes (Drag and Drop)
+function rebuildArrays() {
+  backlogListArray = [];
+  progressListArray = [];
+  completeListArray = [];
+  onHoldListArray = [];
+  for (let i = 0; i < backlogList.children.length; i++) {
+    backlogListArray.push(backlogList.children[i].textContent);
+  }
+  for (let i = 0; i < progressList.children.length; i++) {
+    progressListArray.push(progressList.children[i].textContent);
+  }
+  for (let i = 0; i < completeList.children.length; i++) {
+    completeListArray.push(completeList.children[i].textContent);
+  }
+  for (let i = 0; i < onHoldList.children.length; i++) {
+    onHoldListArray.push(onHoldList.children[i].textContent);
+  }
+  updateDOM();
 }
 
 // Drag Functions
@@ -134,6 +157,7 @@ function drop(event) {
   // Add Item to the correct column (array)
   const parent = listColumns[correctColumn];
   parent.appendChild(draggedItem); // Append the dragged item to the column
+  rebuildArrays();
 }
 
 // on Load
