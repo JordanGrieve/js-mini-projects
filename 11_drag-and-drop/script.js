@@ -108,6 +108,30 @@ function updateDOM() {
   updateSavedColumns();
 }
 
+//Add to Column, Reset Textarea
+function addToColumn(column) {
+  const itemText = addItems[column].textContent.trim(); // Get the text from the input box
+  const selectedArray = listArrays[column]; // Get the corresponding array for the column
+  selectedArray.push(itemText); // Add the item to the array
+  addItems[column].textContent = ""; // Clear the input box
+  updateDOM(); // Update the DOM to reflect changes
+}
+
+// Show Add Input Box
+function showInputBox(column) {
+  addBtns[column].style.visibility = "hidden"; // Hide the add button
+  saveItemBtns[column].style.display = "flex"; // Show the save button
+  addItemContainers[column].style.display = "flex"; // Show the input box
+}
+
+// Hide Add Input Box
+function hideInputBox(column) {
+  addBtns[column].style.visibility = "visible"; // Show the add button
+  saveItemBtns[column].style.display = "none"; // Hide the save button
+  addItemContainers[column].style.display = "none"; // Hide the input box
+  addToColumn(column); // Add item to the column
+}
+
 // Allow arrays to reflect changes (Drag and Drop)
 function rebuildArrays() {
   backlogListArray = [];
