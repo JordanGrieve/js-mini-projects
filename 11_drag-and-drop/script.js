@@ -57,17 +57,18 @@ function updateSavedColumns() {
 
 // Create DOM Elements for each list item
 function createItemEl(columnEl, column, item, index) {
-  //   console.log("columnEl:", columnEl);
-  //   console.log("column:", column);
-  //   console.log("item:", item);
-  //   console.log("index:", index);
-  // List Item
   const listEl = document.createElement("li");
   listEl.classList.add("drag-item");
 
+  // List Item Attributes
   listEl.textContent = item;
   listEl.draggable = true; // Make the item draggable
   listEl.setAttribute("ondragstart", "drag(event)");
+  listEl.contentEditable = true; // Make the item editable
+
+  //   set ID
+  listEl.id = index;
+  listEl.setAttribute("onfocusout", `updatedItem(${index}, ${column})`);
   // Append List Item
   columnEl.appendChild(listEl);
 }
@@ -88,24 +89,34 @@ function updateDOM() {
   // Progress Column
   progressList.textContent = ""; // Reset HTML
   progressListArray.forEach((progressItem, index) => {
-    createItemEl(progressList, "0", progressItem, index);
+    createItemEl(progressList, "1", progressItem, index);
   });
 
   // Complete Column
   completeList.textContent = ""; // Reset HTML
   completeListArray.forEach((completeItem, index) => {
-    createItemEl(completeList, "0", completeItem, index);
+    createItemEl(completeList, "2", completeItem, index);
   });
 
   // On Hold Column
   onHoldList.textContent = ""; // Reset HTML
   onHoldListArray.forEach((onHoldItem, index) => {
-    createItemEl(onHoldList, "0", onHoldItem, index);
+    createItemEl(onHoldList, "3", onHoldItem, index);
   });
 
   // Run getSavedColumns only once, Update Local Storage
   updatedOnLoad = true; // Set flag to true after first load
   updateSavedColumns();
+}
+
+// Update Item in Array - Delete Item from Array, Update localStorage
+function updatedItem(id, column) {
+  const selectedArray = listArrays[column];
+  const selectedColumnEl = listColumns[column].children; // Get the children of the column
+  if (!selectedColumnEl[id].textContent) {
+    selectedArray.splice(id, 1);
+  }
+  updateDOM(); // Update the DOM to reflect changes
 }
 
 //Add to Column, Reset Textarea
