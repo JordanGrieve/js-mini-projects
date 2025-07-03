@@ -22,6 +22,7 @@ let listArrays = [];
 // Drag Functionality
 let draggedItem;
 let currentColumn; // Track the column where the item is currently located
+let dragging = false; // Track if an item is being dragged
 
 // Get Arrays from localStorage if available, set default values if not
 function getSavedColumns() {
@@ -113,10 +114,14 @@ function updateDOM() {
 function updatedItem(id, column) {
   const selectedArray = listArrays[column];
   const selectedColumnEl = listColumns[column].children; // Get the children of the column
-  if (!selectedColumnEl[id].textContent) {
-    selectedArray.splice(id, 1);
+  if (!dragging) {
+    if (!selectedColumnEl[id].textContent) {
+      selectedArray.splice(id, 1);
+    } else {
+      selectedArray[id] = selectedColumnEl[id].textContent.trim(); // Update the item in the array
+    }
+    updateDOM(); // Update the DOM to reflect changes
   }
-  updateDOM(); // Update the DOM to reflect changes
 }
 
 //Add to Column, Reset Textarea
@@ -173,6 +178,7 @@ function drag(event) {
 // Drop Function
 function allowDrop(event) {
   event.preventDefault(); // Prevent default behavior to allow drop
+  dragging = true; // Set dragging to true when an item is being dragged
 }
 
 // When an item is dragged over a column, highlight the column
@@ -192,6 +198,8 @@ function drop(event) {
   // Add Item to the correct column (array)
   const parent = listColumns[correctColumn];
   parent.appendChild(draggedItem); // Append the dragged item to the column
+  //   Dragging completed, reset dragging state
+  dragging = false;
   rebuildArrays();
 }
 
