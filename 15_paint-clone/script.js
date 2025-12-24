@@ -191,21 +191,22 @@ loadStorageBtn.addEventListener("click", () => {
   }
 });
 
-// // Clear Local Storage
-// clearStorageBtn.addEventListener('click', () => {
+// Clear Local Storage
+clearStorageBtn.addEventListener("click", () => {
+  localStorage.removeItem("savedCanvas");
+  // Active Tool
+  activeToolEl.textContent = "Local Storage Cleared";
+  setTimeout(switchToBrush, 1500);
+});
 
-//   // Active Tool
-//   activeToolEl.textContent = 'Local Storage Cleared';
-//   setTimeout(switchToBrush, 1500);
-// });
-
-// // Download Image
-// downloadBtn.addEventListener('click', () => {
-
-//   // Active Tool
-//   activeToolEl.textContent = 'Image File Saved';
-//   setTimeout(switchToBrush, 1500);
-// });
+// Download Image
+downloadBtn.addEventListener("click", () => {
+  downloadBtn.href = canvas.toDataURL("image/jpeg", 1);
+  downloadBtn.download = "paint-clone-image.jpg";
+  // Active Tool
+  activeToolEl.textContent = "Image File Saved";
+  setTimeout(switchToBrush, 1500);
+});
 
 // Event Listener
 brushIcon.addEventListener("click", switchToBrush);
