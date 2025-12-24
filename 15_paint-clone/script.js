@@ -136,21 +136,19 @@ function getMousePosition(event) {
 canvas.addEventListener("mousedown", (event) => {
   isMouseDown = true;
   const currentPosition = getMousePosition(event);
-  console.log("mouse is clicked", currentPosition);
-  //   context.moveTo(currentPosition.x, currentPosition.y);
-  //   context.beginPath();
-  //   context.lineWidth = currentSize;
-  //   context.lineCap = 'round';
-  //   context.strokeStyle = currentColor;
+  context.moveTo(currentPosition.x, currentPosition.y);
+  context.beginPath();
+  context.lineWidth = currentSize;
+  context.lineCap = "round";
+  context.strokeStyle = currentColor;
 });
 
 // Mouse Move
 canvas.addEventListener("mousemove", (event) => {
   if (isMouseDown) {
     const currentPosition = getMousePosition(event);
-    console.log("mouse is moving", currentPosition);
-    //   context.lineTo(currentPosition.x, currentPosition.y);
-    //   context.stroke();
+    context.lineTo(currentPosition.x, currentPosition.y);
+    context.stroke();
     //   storeDrawn(
     //     currentPosition.x,
     //     currentPosition.y,
