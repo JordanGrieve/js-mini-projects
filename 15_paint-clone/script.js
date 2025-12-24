@@ -168,25 +168,28 @@ canvas.addEventListener("mouseup", () => {
   console.log("mouse is unclicked");
 });
 
-// // Save to Local Storage
-// saveStorageBtn.addEventListener('click', () => {
+// Save to Local Storage
+saveStorageBtn.addEventListener("click", () => {
+  localStorage.setItem("savedCanvas", JSON.stringify(drawnArray));
+  // Active Tool
+  activeToolEl.textContent = "Canvas Saved";
+  setTimeout(switchToBrush, 1500);
+});
 
-//   // Active Tool
-//   activeToolEl.textContent = 'Canvas Saved';
-//   setTimeout(switchToBrush, 1500);
-// });
-
-// // Load from Local Storage
-// loadStorageBtn.addEventListener('click', () => {
-//   if (localStorage.) {
-//     drawnArray = JSON(localStorage.);
-
-//   // Active Tool
-//     activeToolEl.textContent = 'Canvas Loaded';
-//     setTimeout(switchToBrush, 1500);
-//   }
-
-// });
+// Load from Local Storage
+loadStorageBtn.addEventListener("click", () => {
+  if (localStorage.getItem("savedCanvas")) {
+    drawnArray = JSON.parse(localStorage.getItem("savedCanvas"));
+    restoreCanvas();
+    // Active Tool
+    activeToolEl.textContent = "Canvas Loaded";
+    setTimeout(switchToBrush, 1500);
+  } else {
+    // Active Tool
+    activeToolEl.textContent = "No Canvas Found";
+    setTimeout(switchToBrush, 1500);
+  }
+});
 
 // // Clear Local Storage
 // clearStorageBtn.addEventListener('click', () => {
